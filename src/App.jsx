@@ -6,9 +6,7 @@ import axios from '@/lib/axios'
 
 
 function App() {
-  const [count, setCount] = useState(0)
   const [weight, setWeight] = useState({})
-
 
   const getData = () => {
 		const requestUrl = `/weight/`;
@@ -22,11 +20,8 @@ function App() {
 			});
 	};
 
-
-
   return (
     <>
-
       <h1>La Vie Rabbit</h1>
       <button onClick={getData}>クリック</button>
     </>
