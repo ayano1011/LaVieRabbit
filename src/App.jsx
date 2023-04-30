@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <h1>La Vie Rabbit Test</h1>
+      <h1>La Vie Rabbit テストです</h1>
       <button onClick={getData}>クリック</button>
     </>
   )
