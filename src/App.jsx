@@ -55,7 +55,15 @@ function App() {
 
   return (
     <>
-      <h1>La Vie Rabbit</h1>
+      <div className="total-area">
+        <p>合計</p>
+        <div className="total-text">
+            <p>個</p>
+        </div>
+      </div>
+
+
+      {/* <h1>La Vie Rabbit</h1> */}
       {/* <button onClick={getData}>クリック</button> */}
       <BarChart
         width={600}
@@ -69,7 +77,7 @@ function App() {
       <Tooltip />
       <Legend />
       <Bar dataKey="weight" name='個数' fill="#8884d8" />
-      {/* <Bar dataKey="average" name='平均' fill="#82ca9d" /> */}
+      <Bar dataKey="average" name='平均' fill="#82ca9d" />
     </BarChart>
     </>
   )
