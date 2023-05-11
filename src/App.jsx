@@ -201,8 +201,10 @@ function App() {
 
   //CSS ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
   const daySelect = css`
-    display: flex
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
   `
 
   const totalCountArea = css`
@@ -229,17 +231,24 @@ function App() {
   color: black;
   font-size: 6px
 `;
-  
-  const datePickerContainerStyle = css`
-  background-color: white;
+
+
+  const datePickerStyle = css`
+  width: 140px;
+  height: 24px;
+  background-color: #f2f2f2;
+  color: black;
+  text-align: center;
+  border: 0.5px solid #ccc;
 `;
+
 
   return (
     <>
       <div css={daySelect}>
         <IconContext.Provider value={{ color: '#ccc', size: '50px' }}>
           <AiFillCaretLeft onClick={ handleSubDayChange } />
-            <DatePicker locale="ja" maxDate = { new Date() } dateFormatCalendar="yyyy年 MM月" dateFormat="yyyy/MM/dd" selected={date} onChange={(date) => setDate(date)} />
+            <DatePicker css={datePickerStyle} locale="ja" maxDate = { new Date() } dateFormatCalendar="yyyy年 MM月" dateFormat="yyyy/MM/dd" selected={date} onChange={(date) => setDate(date)} />
           <AiFillCaretRight onClick={ handleAddDayChange }/>
         </IconContext.Provider>
       </div>
