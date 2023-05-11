@@ -14,6 +14,9 @@ import { AiFillCaretRight } from 'react-icons/ai';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 
+import Papa from 'papaparse';
+
+
 
 
 
@@ -21,6 +24,19 @@ function App() {
   const [data, setData] = useState(null)
   const [date, setDate] = useState(new Date());
   const [isLorded, setIsLorded] = useState(false);
+
+
+
+  //CSVファイルデータから読み込み
+useEffect(() => {
+    Papa.parse("weight.csv", {
+      download: true,
+      header: true,
+      complete: (results) => {
+        console.log(results.data);
+      }
+    });
+  }, []);
 
 
   ChartJS.register(
@@ -119,6 +135,9 @@ function App() {
 			},
 		},
   };
+
+
+
 
 // 初回レンダリング時に実行
   useEffect(() => {
