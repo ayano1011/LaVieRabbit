@@ -22,6 +22,19 @@ function App() {
   const [isLorded, setIsLorded] = useState(false);
   const [totalCount, setTotalCount] = useState(null);
 
+
+  ChartJS.register(
+		CategoryScale,
+		LinearScale,
+		BarElement,
+		Title,
+		TimeScale,
+		Tooltip,
+		Legend,
+		PointElement,
+		LineElement
+  );
+
   //時間ごとの棒グラフ CSVファイルデータから読み込み,データを取得。
   const getDataCSV = () => {
     Papa.parse("weight2.csv", {
@@ -49,42 +62,32 @@ function App() {
     });
   }
 
-  //時間ごとの平均折れ線グラフ CSVファイルデータから読み込み,データを取得。
-  const getDataAverage = () => {
-    Papa.parse("average.csv", {
-      download: true,
-      header: true,
-      complete: (results) => {
-        const labels = results.data.map((obj) => obj['時間']);
-        const averageData =  results.data.map((obj) => obj['個数/1時間ごと']);;
-        setAverageData({
-          labels,
-          datasets: [
-            {
-              label: "個数/1時間ごと",
-              data: averageData,
-              backgroundColor: "rgba(255, 99, 132, 0.5)",
-            },
-          ],
-        })
-        console.log(results.data);
-        // setIsLorded(true);
-      }
-    });
-  }
+  // //時間ごとの平均折れ線グラフ CSVファイルデータから読み込み,データを取得。
+  // const getDataAverage = () => {
+  //   Papa.parse("average.csv", {
+  //     download: true,
+  //     header: true,
+  //     complete: (results) => {
+  //       const labels = results.data.map((obj) => obj['時間']);
+  //       const averageData =  results.data.map((obj) => obj['個数/1時間ごと']);;
+  //       setAverageData({
+  //         labels,
+  //         datasets: [
+  //           {
+  //             label: "個数/1時間ごと",
+  //             data: averageData,
+  //             backgroundColor: "rgba(255, 99, 132, 0.5)",
+  //           },
+  //         ],
+  //       })
+  //       console.log(results.data);
+  //       // setIsLorded(true);
+  //     }
+  //   });
+  // }
 
 
-  ChartJS.register(
-		CategoryScale,
-		LinearScale,
-		BarElement,
-		Title,
-		TimeScale,
-		Tooltip,
-		Legend,
-		PointElement,
-		LineElement
-  );
+
 
   registerLocale("ja", ja);
 
@@ -171,10 +174,10 @@ function App() {
     getDataCSV();
   }, [date]);
 
-  useEffect(() => {
-    // getWeight();
-    getDataAverage();
-  }, [averageData]);
+  // useEffect(() => {
+  //   // getWeight();
+  //   getDataAverage();
+  // }, [averageData]);
 
 
   return (
@@ -191,7 +194,6 @@ function App() {
       </div>
 
       {isLorded ? <Bar data={data} /> : <p>Loading...</p>}
-      {isLorded ? <Line data={averageData} /> : <p>Loading...</p>}
     </>
   )
 }
