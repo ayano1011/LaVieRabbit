@@ -1,21 +1,41 @@
 import { useState ,useEffect} from 'react'
 import './App.css'
 import axios from '@/lib/axios'
-import { formatDistance, format } from "date-fns";
+import { formatDistance, format, addDays,subDays } from "date-fns";
 import { ja } from "date-fns/locale";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, TimeScale, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
 import { Line,Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
 
+import { AiFillCaretLeft } from 'react-icons/ai';
+import { AiFillCaretRight } from 'react-icons/ai';
+
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"
+
+
+
 
 function App() {
-  // const [weight, setWeight] = useState([])
   const [data, setData] = useState(null)
-  const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
-  // const [labels, setLabels] = useState([1,21]);
-  // const [weightData, setWeightData] = useState([1, 2]);
+  const [date, setDate] = useState(new Date());
   const [isLorded, setIsLorded] = useState(false);
+
+
+  ChartJS.register(
+		CategoryScale,
+		LinearScale,
+		BarElement,
+		Title,
+		TimeScale,
+		Tooltip,
+		Legend,
+		PointElement,
+		LineElement
+  );
+
+  registerLocale("ja", ja);
 
   //選択した日付の重さ情報を取得
   const getWeight = () => {
@@ -44,6 +64,8 @@ function App() {
           ],
         })
 
+        console.log(data);
+
         setIsLorded(true);
       })
       .catch((error) => {
@@ -51,24 +73,22 @@ function App() {
       });
   };
 
-//選択した日付に切り替える
+//カレンダーで選択した日付に切り替える
   const selectDateHandler = (e) => {
     console.log(e.target.value);
     setDate(e.target.value);
   }
 
-  ChartJS.register(
-		CategoryScale,
-		LinearScale,
-		BarElement,
-		Title,
-		TimeScale,
-		Tooltip,
-		Legend,
-		PointElement,
-		LineElement
-  );
-  
+
+  //前後の日付選択
+  const handleAddDayChange = () => {
+    setDate(addDays(date , 1))
+  }
+
+  const handleSubDayChange = () => {
+    setDate(subDays(date , 1))
+  }
+
   const options = {
 		responsive: true,
 		plugins: {
@@ -100,24 +120,17 @@ function App() {
 		},
   };
 
-
-
 // 初回レンダリング時に実行
   useEffect(() => {
     getWeight();
   }, [date]);
 
 
-
-
   return (
     <>
-      <input type="date" onChange={selectDateHandler}  value={date}/>
-
-      {/* <div>
-        {formattedDate}
-      </div> */}
-
+      <AiFillCaretLeft onClick={ handleSubDayChange } />
+      <DatePicker locale="ja" maxDate = { new Date() } dateFormatCalendar="yyyy年 MM月" dateFormat="yyyy/MM/dd" selected={date} onChange={(date) => setStartDate(date)} />
+      <AiFillCaretRight onClick={ handleAddDayChange }/>
 
       <div className="total-area">
         <p>合計</p>
@@ -126,25 +139,8 @@ function App() {
         </div>
       </div>
 
-
-      {/* <BarChart
-        width={600}
-        height={400}
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="time" type='time' scale='time' interval='hour'/>
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="count" name='個数' fill="#8884d8" />
-      <Bar dataKey="average" name='平均' fill="#82ca9d" />
-    </BarChart> */}
-
-
-
       {isLorded ? <Bar options={options} data={data} /> : <p>Loading...</p>}
+      {/* {isLorded ? <Bar options={options} data={format( data , "yyyy-MM-dd")} /> : <p>Loading...</p>} */}
 
     </>
   )
