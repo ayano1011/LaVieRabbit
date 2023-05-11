@@ -240,13 +240,14 @@ function App() {
   color: black;
   text-align: center;
   border: 0.5px solid #ccc;
+  font-size: 16px
 `;
 
 
   return (
     <>
       <div css={daySelect}>
-        <IconContext.Provider value={{ color: '#ccc', size: '50px' }}>
+        <IconContext.Provider value={{ color: '#ccc', size: '70px' }}>
           <AiFillCaretLeft onClick={ handleSubDayChange } />
             <DatePicker css={datePickerStyle} locale="ja" maxDate = { new Date() } dateFormatCalendar="yyyy年 MM月" dateFormat="yyyy/MM/dd" selected={date} onChange={(date) => setDate(date)} />
           <AiFillCaretRight onClick={ handleAddDayChange }/>
