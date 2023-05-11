@@ -17,36 +17,62 @@ import Papa from 'papaparse';
 
 function App() {
   const [data, setData] = useState(null)
+  const [averageData, setAverageData] = useState(null)
   const [date, setDate] = useState(new Date());
   const [isLorded, setIsLorded] = useState(false);
   const [totalCount, setTotalCount] = useState(null);
 
-  //CSVファイルデータから読み込み,データを取得。
+  //時間ごとの棒グラフ CSVファイルデータから読み込み,データを取得。
   const getDataCSV = () => {
-        Papa.parse("weight2.csv", {
-          download: true,
-          header: true,
-          complete: (results) => {
-            const filterData = results.data.filter((obj) => obj['日付'] === format(date, "yyyy/MM/dd"));
-            setTotalCount(filterData.reduce((sum, element) => sum + Number(element['個数']), 0))
+    Papa.parse("weight2.csv", {
+      download: true,
+      header: true,
+      complete: (results) => {
+        const filterData = results.data.filter((obj) => obj['日付'] === format(date, "yyyy/MM/dd"));
+        setTotalCount(filterData.reduce((sum, element) => sum + Number(element['個数']), 0))
 
-            const labels = filterData.map((obj) => obj['時間']);
-            const weightData =  filterData.map((obj) => obj['個数']);;
-            setData({
-              labels,
-              datasets: [
-                {
-                  label: "個数",
-                  data: weightData,
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+        const labels = filterData.map((obj) => obj['時間']);
+        const weightData =  filterData.map((obj) => obj['個数']);;
+        setData({
+          labels,
+          datasets: [
+            {
+              label: "個数",
+              data: weightData,
+              backgroundColor: "rgba(255, 99, 132, 0.5)",
             },
           ],
         })
-            console.log(results.data);
-            setIsLorded(true);
-          }
-        });
+        console.log(results.data);
+        setIsLorded(true);
+      }
+    });
   }
+
+  //時間ごとの平均折れ線グラフ CSVファイルデータから読み込み,データを取得。
+  const getDataAverage = () => {
+    Papa.parse("average.csv", {
+      download: true,
+      header: true,
+      complete: (results) => {
+        const labels = results.data.map((obj) => obj['時間']);
+        const averageData =  results.data.map((obj) => obj['個数/1時間ごと']);;
+        setAverageData({
+          labels,
+          datasets: [
+            {
+              label: "個数/1時間ごと",
+              data: averageData,
+              backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+          ],
+        })
+        console.log(results.data);
+        // setIsLorded(true);
+      }
+    });
+  }
+
 
   ChartJS.register(
 		CategoryScale,
@@ -145,6 +171,11 @@ function App() {
     getDataCSV();
   }, [date]);
 
+  useEffect(() => {
+    // getWeight();
+    getDataAverage();
+  }, [averageData]);
+
 
   return (
     <>
@@ -160,6 +191,7 @@ function App() {
       </div>
 
       {isLorded ? <Bar data={data} /> : <p>Loading...</p>}
+      {isLorded ? <Line data={averageData} /> : <p>Loading...</p>}
     </>
   )
 }
