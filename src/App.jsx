@@ -24,19 +24,36 @@ function App() {
   const [data, setData] = useState(null)
   const [date, setDate] = useState(new Date());
   const [isLorded, setIsLorded] = useState(false);
+  const [totalCount, setTotalCount] = useState(null);
 
 
 
-  //CSVファイルデータから読み込み
-useEffect(() => {
-    Papa.parse("weight.csv", {
-      download: true,
-      header: true,
-      complete: (results) => {
-        console.log(results.data);
-      }
-    });
-  }, []);
+  //CSVファイルデータから読み込み,データを取得。
+  const getDataCSV = () => {
+        Papa.parse("weight2.csv", {
+          download: true,
+          header: true,
+          complete: (results) => {
+            const filterData = results.data.filter((obj) => obj['日付'] === format(date, "yyyy/MM/dd"));
+            setTotalCount(filterData.reduce((sum, element) => sum + Number(element['個数']), 0))
+
+            const labels = filterData.map((obj) => obj['時間']);
+            const weightData =  filterData.map((obj) => obj['個数']);;
+            setData({
+              labels,
+              datasets: [
+                {
+                  label: "個数",
+                  data: weightData,
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+          ],
+        })
+            console.log(results.data);
+            setIsLorded(true);
+          }
+        });
+  }
 
 
   ChartJS.register(
@@ -79,6 +96,9 @@ useEffect(() => {
             },
           ],
         })
+
+
+
 
         console.log(data);
 
@@ -141,24 +161,25 @@ useEffect(() => {
 
 // 初回レンダリング時に実行
   useEffect(() => {
-    getWeight();
+    // getWeight();
+    getDataCSV();
   }, [date]);
 
 
   return (
     <>
       <AiFillCaretLeft onClick={ handleSubDayChange } />
-      <DatePicker locale="ja" maxDate = { new Date() } dateFormatCalendar="yyyy年 MM月" dateFormat="yyyy/MM/dd" selected={date} onChange={(date) => setStartDate(date)} />
+      <DatePicker locale="ja" maxDate = { new Date() } dateFormatCalendar="yyyy年 MM月" dateFormat="yyyy/MM/dd" selected={date} onChange={(date) => setDate(date)} />
       <AiFillCaretRight onClick={ handleAddDayChange }/>
 
       <div className="total-area">
         <p>合計</p>
         <div className="total-text">
-            <p>個</p>
+          <p>{ totalCount }個</p>
         </div>
       </div>
 
-      {isLorded ? <Bar options={options} data={data} /> : <p>Loading...</p>}
+      {isLorded ? <Bar data={data} /> : <p>Loading...</p>}
       {/* {isLorded ? <Bar options={options} data={format( data , "yyyy-MM-dd")} /> : <p>Loading...</p>} */}
 
     </>
