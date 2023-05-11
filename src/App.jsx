@@ -8,25 +8,18 @@ import { Line,Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
 
-import { AiFillCaretLeft } from 'react-icons/ai';
-import { AiFillCaretRight } from 'react-icons/ai';
+import { AiFillCaretLeft , AiFillCaretRight } from 'react-icons/ai';
 
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 
 import Papa from 'papaparse';
 
-
-
-
-
 function App() {
   const [data, setData] = useState(null)
   const [date, setDate] = useState(new Date());
   const [isLorded, setIsLorded] = useState(false);
   const [totalCount, setTotalCount] = useState(null);
-
-
 
   //CSVファイルデータから読み込み,データを取得。
   const getDataCSV = () => {
@@ -54,7 +47,6 @@ function App() {
           }
         });
   }
-
 
   ChartJS.register(
 		CategoryScale,
@@ -85,7 +77,6 @@ function App() {
         const labels = format_time.map((obj) => obj.time)
         const weightData = format_time.map((obj) => obj.count);
 
-
         setData({
           labels,
           datasets: [
@@ -96,12 +87,7 @@ function App() {
             },
           ],
         })
-
-
-
-
         console.log(data);
-
         setIsLorded(true);
       })
       .catch((error) => {
@@ -114,7 +100,6 @@ function App() {
     console.log(e.target.value);
     setDate(e.target.value);
   }
-
 
   //前後の日付選択
   const handleAddDayChange = () => {
@@ -129,7 +114,6 @@ function App() {
 		responsive: true,
 		plugins: {
 			legend: {
-				// display: false,
 			},
 			title: {
 				display: true,
@@ -147,7 +131,6 @@ function App() {
 				},
         time: {
           parser:"HH:mm",
-					// unit: "hour",
 				},
 				ticks: {
 					stepSize: 3,
@@ -155,9 +138,6 @@ function App() {
 			},
 		},
   };
-
-
-
 
 // 初回レンダリング時に実行
   useEffect(() => {
@@ -180,8 +160,6 @@ function App() {
       </div>
 
       {isLorded ? <Bar data={data} /> : <p>Loading...</p>}
-      {/* {isLorded ? <Bar options={options} data={format( data , "yyyy-MM-dd")} /> : <p>Loading...</p>} */}
-
     </>
   )
 }
