@@ -31,8 +31,8 @@ function App() {
         })
         const labels = format_time.map((obj) => obj.time)
         const weightData = format_time.map((obj) => obj.count);
-        
-        
+
+
         setData({
           labels,
           datasets: [
@@ -146,7 +146,6 @@ function App() {
 
       {isLorded ? <Bar options={options} data={data} /> : <p>Loading...</p>}
 
-      
     </>
   )
 }
