@@ -69,7 +69,7 @@ function App() {
               borderWidth: 1,
             },
             {
-              type:'scatter',
+              type:'bar',
               label: "ご飯",
               data: [, , , , , , , , ,1 , , , , , , , , , ,1 , , , ,],
               pointStyle: 'rectRounded',
