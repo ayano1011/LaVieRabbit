@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { formatDistance, format, addDays,subDays } from "date-fns";
 import { ja } from "date-fns/locale";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, TimeScale, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Line,Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
 
@@ -60,7 +60,7 @@ function App() {
               backgroundColor: "rgba(255, 99, 132, 0.5)",
             },
             {
-              type:'bar',
+              type:'line',
               label: "平均",
               data: [10, 21, 13, 2, 5, 6, 15, 2, 1, 9, 27, 26, 20, 23, 21, 29, 10, 2, 1, 2, 16, 8, 14, 4],
               pointRadius: 1,
@@ -69,7 +69,7 @@ function App() {
               borderWidth: 1,
             },
             {
-              type:'bar',
+              type:'scatter',
               label: "ご飯",
               data: [, , , , , , , , ,1 , , , , , , , , , ,1 , , , ,],
               pointStyle: 'rectRounded',
