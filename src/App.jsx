@@ -20,12 +20,11 @@ import Papa from 'papaparse';
 import { css } from "@emotion/react";
 
 function App() {
-  const [data, setData] = useState(null)
-  const [averageData, setAverageData] = useState(null)
+  const [data, setData] = useState(null);
+  const [averageData, setAverageData] = useState(null);
   const [date, setDate] = useState(new Date());
   const [isLorded, setIsLorded] = useState(false);
   const [totalCount, setTotalCount] = useState(null);
-
 
   ChartJS.register(
 		CategoryScale,
@@ -36,7 +35,7 @@ function App() {
 		Tooltip,
 		Legend,
 		PointElement,
-		LineElement
+		LineElement,
   );
 
   //時間ごとの棒グラフ CSVファイルデータから読み込み,データを取得。
@@ -50,7 +49,7 @@ function App() {
 
         // const labels = filterData.map((obj) => obj['時間']);
         const labels = ['0時','1時','2時','3時','4時','5時','6時','7時','8時','9時','10時','11時','12時','13時','14時','15時','16時','17時','18時','19時','20時','21時','22時','23時'];
-        const weightData =  filterData.map((obj) => obj['個数']);;
+        const weightData =  filterData.map((obj) => obj['個数']);
         setData({
           labels,
           datasets: [
@@ -62,7 +61,7 @@ function App() {
             },
             {
               type:'line',
-              label: "平均個数",
+              label: "平均",
               data: [10, 21, 13, 2, 5, 6, 15, 2, 1, 9, 27, 26, 20, 23, 21, 29, 10, 2, 1, 2, 16, 8, 14, 4],
               pointRadius: 1,
               backgroundColor: "rgba(0,0,128,1)",
@@ -255,6 +254,7 @@ function App() {
       </div>
 
       <div css={totalCountArea} className="total-area">
+        {/* <FaPoo /> */}
         <p css={totalTitle}>合計 </p>
         <div css={totalCountItem} className="total-text">
           <p css={totalCountStyle}>{ totalCount } <span css={individualCountStyle}>個</span></p>
