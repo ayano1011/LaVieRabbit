@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { formatDistance, format, addDays,subDays } from "date-fns";
 import { ja } from "date-fns/locale";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, TimeScale, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
-import { Line,Bar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
 
@@ -261,6 +261,7 @@ function App() {
         </div>
       </div>
 
+      {/* {isLorded ? <Bar data={data} /> : <p>Loading...</p>} */}
       {isLorded ? <Bar data={data} /> : <p>Loading...</p>}
     </>
   )
