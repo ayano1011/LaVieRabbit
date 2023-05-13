@@ -73,7 +73,7 @@ function App() {
             {
               type:'line',
               label: "平均",
-              data: [10, 21, 13, 2, 5, 6, 15, 2, 1, 9, 27, 26, 20, 23, 21, 29, 10, 2, 1, 2, 16, 8, 14, 4],
+              data: [10, 16, 13, 2, 5, 6, 11, 2, 1, 9, 27, 26, 20, 23, 21, 29, 10, 3, 2, 3, 16, 10, 14, 4],
               pointRadius: 1,
               // backgroundColor: "rgba(0,0,128,1)",
               backgroundColor: "#ec7aa7",
