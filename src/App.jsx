@@ -9,7 +9,8 @@ import { Line,Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
 
-import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import { AiFillCaretLeft, AiFillCaretRight, } from 'react-icons/ai';
+import { FaPoo } from 'react-icons/fa';
 import { IconContext } from "react-icons"
 
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -74,8 +75,10 @@ function App() {
               label: "平均",
               data: [10, 21, 13, 2, 5, 6, 15, 2, 1, 9, 27, 26, 20, 23, 21, 29, 10, 2, 1, 2, 16, 8, 14, 4],
               pointRadius: 1,
-              backgroundColor: "rgba(0,0,128,1)",
-              borderColor: "rgba(30,144,255,1)",
+              // backgroundColor: "rgba(0,0,128,1)",
+              backgroundColor: "#ec7aa7",
+              // borderColor: "rgba(30,144,255,1)",
+              borderColor: "#ec7aa7",
               borderWidth: 1,
             },
             {
@@ -84,7 +87,8 @@ function App() {
               data: [, , , , , , , , ,1 , , , , , , , , , ,1 , , , ,],
               pointStyle: 'rectRounded',
               pointRadius: 4,
-              backgroundColor: "rgba(34,139,34,1)",
+              // backgroundColor: "rgba(34,139,34,1)",
+              backgroundColor: "#000000",
             },
           ],
         })
@@ -213,7 +217,7 @@ function App() {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 0px;
   `
 
   const totalCountArea = css`
@@ -227,12 +231,13 @@ function App() {
   `
 
   const totalCountItem = css`
-    font-size:22px
+    font-size:30px
   `
 
   const totalCountStyle = css`
   /* totalCountのスタイル */
-  color: darkorange; /* 好きな色に変更 */
+    color: #F091A0;
+    margin:0px
 `;
 
   const individualCountStyle = css`
@@ -252,6 +257,23 @@ function App() {
   font-size: 16px
 `;
 
+  const faPoo = css`
+    width: 30px;
+    height: 30px;
+    color: #F091A0;
+  `
+
+  const total = css`
+    font-size: 16px
+  `
+
+  const total2 = css`
+    margin:0px
+  `
+
+  const x = css`
+    margin:30px
+  `
 
   return (
     <>
@@ -264,15 +286,22 @@ function App() {
       </div>
 
       <div css={totalCountArea} className="total-area">
-        {/* <FaPoo /> */}
-        <p css={totalTitle}>合計 </p>
+        {/* <p css={totalTitle}>合計 </p> */}
         <div css={totalCountItem} className="total-text">
-          <p css={totalCountStyle}>{ totalCount } <span css={individualCountStyle}>個</span></p>
+          <p css={totalCountStyle}><span css={total}>Total</span></p>
+        </div>
+      </div>
+
+      <div css={totalCountArea} className="total-area">
+        <FaPoo css={faPoo} />
+        {/* <p css={totalTitle}>合計 </p> */}
+        <div css={totalCountItem} className="total-text">
+          <p css={total2}>{totalCount} </p>
         </div>
       </div>
 
       {/* {isLorded ? <Bar data={data} /> : <p>Loading...</p>} */}
-      {isLorded ? <Bar data={data} /> : <p>Loading...</p>}
+      {isLorded ? <Bar css={x} data={data} /> : <p>Loading...</p>}
     </>
   )
 }
