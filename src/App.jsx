@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { formatDistance, format, addDays,subDays } from "date-fns";
 import { ja } from "date-fns/locale";
 import { Chart as ChartJS, BarElement, Title, TimeScale, Tooltip, Legend} from 'chart.js';
-import { Chart, LineController, LineElement, PointElement, LinearScale, CategoryScale } from 'chart.js';
+import { Chart, LineController,ScatterController, LineElement, PointElement, LinearScale, CategoryScale } from 'chart.js';
 import { Line,Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
@@ -41,6 +41,7 @@ function App() {
 
   Chart.register(
     LineController,
+    ScatterController,
     LineElement,
     PointElement,
     LinearScale,
