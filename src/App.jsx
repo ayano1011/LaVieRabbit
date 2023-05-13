@@ -3,7 +3,8 @@ import './App.css'
 import axios from '@/lib/axios'
 import { formatDistance, format, addDays,subDays } from "date-fns";
 import { ja } from "date-fns/locale";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, TimeScale, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
+import { Chart as ChartJS, BarElement, Title, TimeScale, Tooltip, Legend} from 'chart.js';
+import { Chart, LineController, LineElement, PointElement, LinearScale, CategoryScale } from 'chart.js';
 import { Line,Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import 'chartjs-adapter-date-fns';
@@ -36,6 +37,14 @@ function App() {
 		Legend,
 		PointElement,
 		LineElement,
+  );
+
+  Chart.register(
+    LineController,
+    LineElement,
+    PointElement,
+    LinearScale,
+    CategoryScale
   );
 
   //時間ごとの棒グラフ CSVファイルデータから読み込み,データを取得。
